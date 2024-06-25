@@ -2,7 +2,7 @@
 
 This code is my Laravel implementation of the Data Importer Coding Task, the program is easily extendible to use different data storage to read data from (data sources) or to push data to (data storages). The current implementation supports xml and json as data sources, and mysql and sqlite as data storages. All Errors are logged into Laravel logger (storage/logs/laravel.log)
 
-## Setup Steps:
+## Setup Instructions:
  - Clone repo
  - Launch Docker - open Terminal and cd to project path (where docker-compose and Dockerfile are located)
  - Run docker-compose build
@@ -43,7 +43,7 @@ This code is my Laravel implementation of the Data Importer Coding Task, the pro
  - Datasources could be modified/added in the datasource folder
 
  ## Project Structure:
-  - app\Console\Commands\ImportData.php: The main Class that runs when executing the console command; handles fetching the arguments and sending them to DataImportService to process them, parses the data, then stores the processed array of items into the chosen Data Storage
+  - app\Console\Commands\ImportData.php: The main Class that runs when executing the console command; handles fetching the arguments and sending them to DataImportService to initiate the chosen data storage and data parser, parses the data, then stores the processed array of items into the chosen Data Storage
 
   - app\Services\DataImportService.php: Handles two main tasks: binding the storage interface to the chosen data storage and returning the correct DataParser for the chosen data source's type
 
@@ -53,12 +53,12 @@ This code is my Laravel implementation of the Data Importer Coding Task, the pro
   - app\Services\Data\XMLDataParser: Handles processing XML data feed (implements DataParserInterface)
   - app\Services\Data\JsonDataParser: Handles processing JSON data feed (implements DataParserInterface)
 
-  - app\Services\Storage\MySQLStorage: Handles switching the data storage connection globally to MySQL (implements StorageInterface)
-  - app\Services\Storage\SQLiteStorage: Handles switching the data storage connection globally to SQLite (implements StorageInterface)
+  - app\Services\Storage\MySQLStorage: Handles switching the data storage to MySQL (implements StorageInterface)
+  - app\Services\Storage\SQLiteStorage: Handles switching the data storage to SQLite (implements StorageInterface)
 
  ## Data Processing:
     - Links are cleaned from extra spaces and line breaks
-    - Prices are multiplied by a floating point multiplier of power 2 and stored as Integers, this helps avoiding floating point rounding errors and represents the prices more accurately. The          multiplier could be configured in config/product.php
+    - Prices are multiplied by a floating point multiplier of power 2 and stored as Integers, this helps avoiding floating point rounding errors and represents prices more accurately. The multiplier can be configured in config/product.php
     - Inconsistent boolean values (Yes, no) are processed and stored as boolean
-    - to avoid breaking import due to one broken entry, all fields are nullable.
-    - it was provided in the description if skus have a fixed legnth or a variable legnth, therefore I did not process them with left zero padding.
+    - to avoid breaking import due to inconcistent data, all fields are nullable.
+    - it was not provided in the description if skus have a fixed legnth or a variable legnth, therefore I did not process them with left zero padding.
