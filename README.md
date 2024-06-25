@@ -43,7 +43,7 @@ This code is my Laravel implementation of the Data Importer Coding Task, the pro
  - Datasources could be modified/added in the datasource folder
 
  ## Project Structure:
-  - app\Console\Commands\ImportData.php: The main Class that runs when executing the console command; handles fetching the arguments and sending them to DataImportService to initiate the chosen data storage and data parser, parses the data, then stores the processed array of items into the chosen Data Storage
+  - app\Console\Commands\ImportData.php: The main Class that runs when executing the console command; handles fetching the arguments and sending them to DataImportService to initiate the chosen data storage and data parser, processes the data, then stores it into the selected Data Storage
 
   - app\Services\DataImportService.php: Handles two main tasks: binding the storage interface to the chosen data storage and returning the correct DataParser for the chosen data source's type
 
